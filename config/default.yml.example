@@ -1,0 +1,7 @@
+server:
+  port: '[API-SERVER-PORT]'
+
+db:
+  host: '[HOST NAME]'
+  database: '[DATABASE NAME]'
+  driver: '[SQL Server Native Client x]'
