@@ -17,24 +17,29 @@ module.exports = db.define('projeto', {
   timestamps: false,
   tableName: 'Projeto',
   hooks: {
-    afterFind (result) {
-      if (result == null)
+    beforeValidate (projeto) {
+      if (projeto.workflow && projeto.workflow.constructor === Array)
+        projeto.workflow = JSON.stringify(projeto.workflow)
+      return projeto
+    },
+    afterFind (projeto) {
+      if (projeto == null)
         return null
-        
-      if (result.constructor === Array)
-        result.forEach(r => r.workflow = JSON.parse(r.workflow))
-      else
-        result.workflow = JSON.parse(result.workflow)
 
-      return result
+      if (projeto.constructor === Array)
+        projeto.forEach(p => p.workflow = JSON.parse(p.workflow))
+      else
+        projeto.workflow = JSON.parse(projeto.workflow)
+
+      return projeto
     },
-    afterCreate (result) {
-      result.workflow = JSON.parse(result.workflow)
-      return result
+    afterCreate (projeto) {
+      projeto.workflow = JSON.parse(projeto.workflow)
+      return projeto
     },
-    afterUpdate (result) {
-      result.workflow = JSON.parse(result.workflow)
-      return result
+    afterUpdate (projeto) {
+      projeto.workflow = JSON.parse(projeto.workflow)
+      return projeto
     }
   }
 })

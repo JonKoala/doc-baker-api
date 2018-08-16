@@ -12,6 +12,13 @@ router.get('/', asyncHandler(async (req, res, next) => {
   res.json(projetos)
 }))
 
+router.get('/:id', asyncHandler(async (req, res, next) => {
+  var id = req.params.id;
+
+  var projeto = await dbi.projeto.findById(id, { raw: true });
+  res.json(projeto);
+}))
+
 router.post('/', asyncHandler(async (req, res, next) => {
   var projeto = req.body;
 
