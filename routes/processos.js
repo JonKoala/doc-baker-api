@@ -14,8 +14,8 @@ router.get('/', asyncHandler(async (req, res, next) => {
 }))
 
 router.get('/:_id', asyncHandler(async (req, res, next) => {
-  var processos = await Processo.find({ ...req.params })
-  res.json(processos)
+  var processo = await Processo.findOne({ ...req.params })
+  res.json(processo)
 }))
 
 router.post('/', asyncHandler(async (req, res, next) => {
