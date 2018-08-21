@@ -19,7 +19,9 @@ router.get('/:_id', asyncHandler(async (req, res, next) => {
 }))
 
 router.post('/', asyncHandler(async (req, res, next) => {
-  var processo = new Processo(req.body)
+  var { _id, ...processo } = req.body
+
+  processo = new Processo(processo)
   await processo.save()
   res.json(processo)
 }))
