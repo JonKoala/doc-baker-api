@@ -12,7 +12,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 mongoose.connect(config.get('database.connection'), { useNewUrlParser: true })
+require('./models/Auditor')
 require('./models/Processo')
+require('./models/RequisitoAdmissibilidade')
 
 app.use('/processos', require('./routes/processos'))
 
