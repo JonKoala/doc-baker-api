@@ -8,17 +8,22 @@ const CustomError = require('../utils/CustomError')
 const router = express.Router()
 const Processo = mongoose.model('Processo')
 
-router.get('/', asyncHandler(async (req, res, next) => {
-  var processos = await Processo.find()
+router.get('/abstract/', asyncHandler(async (req, res) => {
+  var processos = await Processo.find(null, 'nome numero ano workflow')
   res.json(processos)
 }))
 
-router.get('/:_id', asyncHandler(async (req, res, next) => {
+router.get('/:_id', asyncHandler(async (req, res) => {
   var processo = await Processo.findOne({ ...req.params })
   res.json(processo)
 }))
 
-router.post('/', asyncHandler(async (req, res, next) => {
+router.get('/', asyncHandler(async (req, res) => {
+  var processos = await Processo.find()
+  res.json(processos)
+}))
+
+router.post('/', asyncHandler(async (req, res) => {
   var { _id, ...processo } = req.body
 
   processo = new Processo(processo)
@@ -26,7 +31,7 @@ router.post('/', asyncHandler(async (req, res, next) => {
   res.json(processo)
 }))
 
-router.put('/', asyncHandler(async (req, res, next) => {
+router.put('/', asyncHandler(async (req, res) => {
   var { _id, ...processo } = req.body
   processo = await Processo.findOneAndUpdate({ _id }, { $set: processo }, { new: true })
   res.json(processo)
