@@ -9,6 +9,6 @@ module.exports = {
   },
   pressupostos: {
     presenteFumus: Boolean,
-    presentePericulum: { type: String, enum: [ 'SIM', 'NÃO', 'REVERSO' ] }
+    presentePericulum: { type: String, enum: ['SIM', 'NÃO', 'REVERSO'] }
   }
 }

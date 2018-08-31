@@ -9,4 +9,4 @@ mongoose.model('RequisitoAdmissibilidade', new mongoose.Schema({
     presente: String,
     ausente: String
   }
-}))
+}, { collection: 'requisitosadmissibilidade' }))

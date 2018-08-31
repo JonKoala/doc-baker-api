@@ -16,6 +16,8 @@ require('./models/Auditor')
 require('./models/Processo')
 require('./models/RequisitoAdmissibilidade')
 
+app.use('/auditores', require('./routes/auditores'))
+app.use('/criterioslegais', require('./routes/criterioslegais'))
 app.use('/processos', require('./routes/processos'))
 
 app.use(require('./utils/CustomErrorHandler'))

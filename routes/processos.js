@@ -2,15 +2,23 @@ const asyncHandler = require('express-async-handler')
 const express = require('express')
 const mongoose = require('mongoose')
 
-const CustomError = require('../utils/CustomError')
-
 
 const router = express.Router()
 const Processo = mongoose.model('Processo')
 
-router.get('/abstract/', asyncHandler(async (req, res) => {
+router.get('/abstract', asyncHandler(async (req, res) => {
   var processos = await Processo.find(null, 'nome numero ano workflow')
   res.json(processos)
+}))
+
+router.get('/tipos', asyncHandler(async (req, res) => {
+  var tipos = Processo.schema.path('tipo').enumValues
+  res.json(tipos)
+}))
+
+router.get('/Periculum/options', asyncHandler(async (req, res) => {
+  var options = Processo.schema.path('documento.mtp.pressupostos.presentePericulum').enumValues
+  res.json(options)
 }))
 
 router.get('/:_id', asyncHandler(async (req, res) => {
