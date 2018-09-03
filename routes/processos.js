@@ -6,19 +6,24 @@ const mongoose = require('mongoose')
 const router = express.Router()
 const Processo = mongoose.model('Processo')
 
+router.get('/tipo/options', asyncHandler(async (req, res) => {
+  var tipos = Processo.schema.path('tipo').enumValues.filter(t => t != null)
+  res.json(tipos)
+}))
+
+router.get('/periculum/options', asyncHandler(async (req, res) => {
+  var options = Processo.schema.path('documento.mtp.pressupostos.presentePericulum').enumValues
+  res.json(options)
+}))
+
 router.get('/abstract', asyncHandler(async (req, res) => {
   var processos = await Processo.find(null, 'nome numero ano workflow')
   res.json(processos)
 }))
 
-router.get('/tipos', asyncHandler(async (req, res) => {
-  var tipos = Processo.schema.path('tipo').enumValues
-  res.json(tipos)
-}))
-
-router.get('/Periculum/options', asyncHandler(async (req, res) => {
-  var options = Processo.schema.path('documento.mtp.pressupostos.presentePericulum').enumValues
-  res.json(options)
+router.get('/workflow/:_id', asyncHandler(async (req, res) => {
+  var workflow = await Processo.findOne({ ...req.params }, 'workflow')
+  res.json(workflow)
 }))
 
 router.get('/:_id', asyncHandler(async (req, res) => {

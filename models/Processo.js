@@ -10,19 +10,19 @@ mongoose.model('Processo', new Schema({
   numero: String,
   ano: Number,
   representante: String,
-  tipo: { type: String, enum: ['Representação', 'Denúncia'] },
+  tipo: { type: String, enum: [null, 'Representação', 'Denúncia'] },
+  objeto: {
+    codigo: String,
+    descricao: String
+  },
+  irregularidades: [{
+      titulo: String
+  }],
   workflow: [{
     action: String,
     state: String
   }],
   documento: {
     mtp
-  },
-  contrato: {
-    edital: String,
-    objeto: String
-  },
-  irregularidades: [{
-      titulo: String
-  }]
+  }
 }))
