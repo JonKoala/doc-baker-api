@@ -22,17 +22,25 @@ router.get('/bake', asyncHandler(async (req, res) => {
     throw new CustomError('Missing obrigatory parameters')
 
   var template = await readFile(path.resolve(`../doc-models/${req.query.template}.docx`), 'binary')
-  var processo = await Processo.findOne({ _id: req.query.processo }).populate('documento.mtp.requisitosPresentes')
+
+  var processo = await Processo.findOne({ _id: req.query.processo })
   processo = processo.toObject()
-  var requisitos = await RequisitoAdmissibilidade.find()
+
+  var incisoToIgnore = (processo.representante.isPessoaFisica) ? 'V' : 'IV'
+
+  var requisitosPresentes = processo.documento.mtp.requisitosPresentes.map(r => r.toString())
+
+  var requisitos = await RequisitoAdmissibilidade.find().lean()
+  requisitos = requisitos.filter(r => r.inciso != incisoToIgnore)
+  requisitos.forEach(r => r.id = r._id.toString())
 
   var parameters = {
     ...processo,
     isRepresentacao: processo.tipo === 'Representação',
-    atendeTodosRequisitos: arrayUtils.containsAll(processo.documento.mtp.requisitosPresentes.map(r => r._id), requisitos.map(r => r._id)),
-    requisitosPresentes: processo.documento.mtp.requisitosPresentes.map(r => r.descricao.presente).join(', '),
-    requisitosAusentes: requisitos.filter(r => !processo.documento.mtp.requisitosPresentes.map(rp => rp._id.toString()).includes(r._id.toString())).map(r => r.descricao.ausente).join(', '),
-    incisosRequisitosAusentes: requisitos.filter(r => !processo.documento.mtp.requisitosPresentes.map(rp => rp._id.toString()).includes(r._id.toString())).map(r => r.inciso).join(', ')
+    atendeTodosRequisitos: arrayUtils.containsAll(requisitosPresentes, requisitos.map(r => r.id)),
+    requisitosPresentes: requisitos.filter(r => requisitosPresentes.includes(r.id)).map(r => r.descricao.presente).join(', '),
+    requisitosAusentes: requisitos.filter(r => !requisitosPresentes.includes(r.id)).map(r => r.descricao.ausente).join(', '),
+    incisosRequisitosAusentes: requisitos.filter(r => !requisitosPresentes.includes(r.id)).map(r => r.inciso).join(', ')
   }
 
   var zip = new Jszip(template)

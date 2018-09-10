@@ -9,8 +9,11 @@ mongoose.model('Processo', new Schema({
   nome: String,
   numero: String,
   ano: Number,
-  representante: String,
   tipo: { type: String, enum: [null, 'Representação', 'Denúncia'] },
+  representante: {
+    nome: String,
+    isPessoaFisica: Boolean
+  },
   objeto: {
     codigo: String,
     descricao: String
