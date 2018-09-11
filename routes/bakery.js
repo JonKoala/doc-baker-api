@@ -23,7 +23,7 @@ router.get('/bake', asyncHandler(async (req, res) => {
 
   var template = await readFile(path.resolve(`../doc-models/${req.query.template}.docx`), 'binary')
 
-  var processo = await Processo.findOne({ _id: req.query.processo })
+  var processo = await Processo.findOne({ _id: req.query.processo }).populate('documento.mtp.auditores')
   processo = processo.toObject()
 
   var incisoToIgnore = (processo.representante.isPessoaFisica) ? 'V' : 'IV'
@@ -40,7 +40,14 @@ router.get('/bake', asyncHandler(async (req, res) => {
     atendeTodosRequisitos: arrayUtils.containsAll(requisitosPresentes, requisitos.map(r => r.id)),
     requisitosPresentes: requisitos.filter(r => requisitosPresentes.includes(r.id)).map(r => r.descricao.presente).join(', '),
     requisitosAusentes: requisitos.filter(r => !requisitosPresentes.includes(r.id)).map(r => r.descricao.ausente).join(', '),
-    incisosRequisitosAusentes: requisitos.filter(r => !requisitosPresentes.includes(r.id)).map(r => r.inciso).join(', ')
+    incisosRequisitosAusentes: requisitos.filter(r => !requisitosPresentes.includes(r.id)).map(r => r.inciso).join(', '),
+    fumusPresente: processo.documento.mtp.pressupostos.presenteFumus,
+    periculumPresente: processo.documento.mtp.pressupostos.presentePericulum === 'SIM',
+    periculumAusente: processo.documento.mtp.pressupostos.presentePericulum === 'NÃO',
+    periculumReverso: processo.documento.mtp.pressupostos.presentePericulum === 'REVERSO',
+    admissibilidadeManifestada: processo.workflow.find(s => ['q-3', 'q-5', 'q-8'].includes(s.state)).action.toUpperCase() === 'SIM',
+    cautelarPropostoDeferimento: processo.documento.mtp.pressupostos.presenteFumus && processo.documento.mtp.pressupostos.presentePericulum.toUpperCase() === 'SIM',
+    auditores: processo.documento.mtp.auditores
   }
 
   var zip = new Jszip(template)
