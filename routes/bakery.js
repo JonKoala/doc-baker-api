@@ -45,7 +45,6 @@ router.get('/bake', asyncHandler(async (req, res) => {
     periculumPresente: processo.documento.mtp.pressupostos.presentePericulum === 'SIM',
     periculumAusente: processo.documento.mtp.pressupostos.presentePericulum === 'NÃO',
     periculumReverso: processo.documento.mtp.pressupostos.presentePericulum === 'REVERSO',
-    admissibilidadeManifestada: processo.workflow.find(s => ['q-3', 'q-5', 'q-8'].includes(s.state)).action.toUpperCase() === 'SIM',
     cautelarPropostoDeferimento: processo.documento.mtp.pressupostos.presenteFumus && processo.documento.mtp.pressupostos.presentePericulum.toUpperCase() === 'SIM',
     auditores: processo.documento.mtp.auditores
   }
