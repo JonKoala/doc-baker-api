@@ -3,3 +3,6 @@ server:
 
 database:
   connection: '[CONNECTION-STRING]'
+
+paths:
+  templates: '[PATH-TO-TEMPLATES-FOLDER]'
