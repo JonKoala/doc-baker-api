@@ -7,7 +7,7 @@ const router = express.Router()
 const RequisitoAdmissibilidade = mongoose.model('RequisitoAdmissibilidade')
 
 router.get('/admissibilidade', asyncHandler(async (req, res) => {
-  var requisitosAdmissibilidade = await RequisitoAdmissibilidade.find()
+  var requisitosAdmissibilidade = await RequisitoAdmissibilidade.find().lean()
   res.json(requisitosAdmissibilidade)
 }))
 

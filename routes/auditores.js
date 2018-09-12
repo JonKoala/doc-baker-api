@@ -7,7 +7,7 @@ const router = express.Router()
 const Auditor = mongoose.model('Auditor')
 
 router.get('/', asyncHandler(async (req, res) => {
-  var auditores = await Auditor.find()
+  var auditores = await Auditor.find().lean()
   res.json(auditores)
 }))
 
