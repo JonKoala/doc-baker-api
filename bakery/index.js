@@ -18,8 +18,7 @@ module.exports = {
     var templateParameters = await modules[templateName].getParameters(processo)
 
     var templater = new Docxtemplater()
-    templater.loadZip(new Jszip(template))
-    templater.setData(templateParameters)
+    templater.loadZip(new Jszip(template)).setData(templateParameters).setOptions({ paragraphLoop: true })
     templater.render()
 
     return templater.getZip().generate({ type: 'nodebuffer' })
