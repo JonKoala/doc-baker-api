@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=prod node ./server.js",
+    "start": "node server.js",
     "dev": "cross-env NODE_ENV=dev node ./server.js"
   },
   "dependencies": {

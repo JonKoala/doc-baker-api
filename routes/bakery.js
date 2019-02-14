@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler')
 const express = require('express')
 const mongoose = require('mongoose')
 
-const arrayUtils = require('../utils/arrayUtils')
+const arrayUtils = require('../utils/ArrayUtils')
 const bakery = require('../bakery')
 const CustomError = require('../utils/CustomError')
 

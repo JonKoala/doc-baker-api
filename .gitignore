@@ -1,5 +1,5 @@
 node_modules/
 npm-debug.log
 error_log
-
-config/*.yml
+docker-compose*.yml
+.env

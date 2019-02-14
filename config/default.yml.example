@@ -1,8 +1,0 @@
-server:
-  port: '[API-SERVER-PORT]'
-
-database:
-  connection: '[CONNECTION-STRING]'
-
-paths:
-  templates: '[PATH-TO-TEMPLATES-FOLDER]'
