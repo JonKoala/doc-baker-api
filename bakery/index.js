@@ -1,19 +1,17 @@
+const axios = require('axios')
 const Docxtemplater = require('docxtemplater')
-const fs = require('fs')
 const Jszip = require('jszip')
-const path = require('path')
-const util = require('util')
 
 
 const modules = {
   'MTP': require('./modules/mtp')
 }
-const readFile = util.promisify(fs.readFile)
 
 module.exports = {
   async bake (templateName, processo) {
 
-    var template = await readFile(path.resolve(`${process.env['DOCBAKER_TEMPLATES_PATH']}/${templateName}.docx`), 'binary')
+    var response = await axios.get(`${process.env['DOCBAKER_TEMPLATES_URL']}/${templateName}.docx`, { responseType: 'arraybuffer' })
+    var template = response.data
     var templateParameters = await modules[templateName].getParameters(processo)
 
     var templater = new Docxtemplater()
