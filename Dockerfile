@@ -8,6 +8,3 @@ RUN npm config set registry http://registry.npmjs.org/ && npm install
 COPY . .
 
 CMD [ "npm", "start" ]
-
-ARG DOCBAKER_API_PORT
-EXPOSE $DOCBAKER_API_PORT
