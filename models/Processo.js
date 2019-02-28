@@ -10,17 +10,6 @@ mongoose.model('Processo', new Schema({
   numero: String,
   ano: Number,
   tipo: { type: String, enum: [null, 'Representação', 'Denúncia'] },
-  representante: {
-    nome: String,
-    isPessoaFisica: Boolean
-  },
-  objeto: {
-    codigo: String,
-    descricao: String
-  },
-  irregularidades: [{
-      titulo: String
-  }],
   workflow: [{
     action: String,
     state: String
