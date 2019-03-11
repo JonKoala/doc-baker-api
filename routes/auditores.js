@@ -1,11 +1,10 @@
-const mongoose = require('mongoose')
 const router = require('express').Router()
 
+const dbi = require('../dbi')
 
-const Auditor = mongoose.model('Auditor')
 
 router.get('/', async (req, res) => {
-  var auditores = await Auditor.find().lean()
+  var auditores = await dbi.Auditor.find().lean()
   res.json(auditores)
 })
 
