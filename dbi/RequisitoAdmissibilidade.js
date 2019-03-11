@@ -1,9 +1,7 @@
-const mongoose = require('mongoose')
+const { model, Schema } = require('mongoose')
 
 
-const Schema = mongoose.Schema
-
-mongoose.model('RequisitoAdmissibilidade', new mongoose.Schema({
+module.exports = model('RequisitoAdmissibilidade', new Schema({
   inciso: String,
   descricao: {
     ausente: String,
