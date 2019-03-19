@@ -3,6 +3,11 @@ const router = require('express').Router()
 const dbi = require('../dbi')
 
 
+router.get('/objeto/tipo/options', async (req, res) => {
+  var tipos = dbi.Processo.schema.path('objeto.tipo').enumValues.filter(t => t != null)
+  res.json(tipos)
+})
+
 router.get('/tipo/options', async (req, res) => {
   var tipos = dbi.Processo.schema.path('tipo').enumValues.filter(t => t != null)
   res.json(tipos)
@@ -14,8 +19,8 @@ router.get('/abstract', async (req, res) => {
 })
 
 router.get('/workflow/:_id', async (req, res) => {
-  var workflow = await dbi.Processo.findOne({ ...req.params }, 'workflow').lean()
-  res.json(workflow)
+  var processo = await dbi.Processo.findOne({ ...req.params }, '-documentos').lean()
+  res.json(processo)
 })
 
 router.get('/:_id', async (req, res) => {
@@ -32,7 +37,7 @@ router.post('/', async (req, res) => {
   var { _id, ...processo } = req.body
 
   processo = new dbi.Processo(processo)
-  processo = await dbi.processo.save()
+  processo = await processo.save()
   res.json(processo)
 })
 

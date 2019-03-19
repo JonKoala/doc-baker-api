@@ -10,9 +10,10 @@ processoSchema = new Schema({
   ano: Number,
   objeto: {
     codigo: String,
-    descricao: String
+    descricao: String,
+    tipo: { type: String, enum: [null, 'Edital', 'Contrato'] }
   },
-  representante: {
+  requerente: {
     nome: String,
     isPessoaFisica: Boolean
   },
