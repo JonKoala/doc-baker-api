@@ -5,9 +5,10 @@ const documentoMTPSchema = require('./ProcessoDocumentoMTP')
 
 
 processoSchema = new Schema({
+  ano: Number,
+  jurisdicionado: String,
   nome: String,
   numero: String,
-  ano: Number,
   objeto: {
     codigo: String,
     descricao: String,

@@ -5,8 +5,8 @@ const dbi = require('../dbi')
 const DocumentoMTPSchema = require('../dbi/ProcessoDocumentoMTP')
 
 
-router.get('/periculum/options', async (req, res) => {
-  var options = DocumentoMTPSchema.path('pressupostos.presentePericulum').enumValues.filter(t => t != null)
+router.get('/cautelar/periculum/options', async (req, res) => {
+  var options = DocumentoMTPSchema.path('cautelar.presentePericulum').enumValues.filter(t => t != null)
   res.json(options)
 })
 
