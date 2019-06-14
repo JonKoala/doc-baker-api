@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/auditores', require('./routes/auditores'))
-// app.use('/bakery', require('./routes/bakery'))
+app.use('/bakery', require('./routes/bakery'))
 app.use('/criterioslegais', require('./routes/criterioslegais'))
 app.use('/documentos', require('./routes/documentos'))
 app.use('/processos', require('./routes/processos'))
