@@ -1,4 +1,4 @@
-module.exports = function(err, req, res, next) {
+module.exports = (err, req, res, next) => {
   if (res.headersSent)
     return next(err)
 

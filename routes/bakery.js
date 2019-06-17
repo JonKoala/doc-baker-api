@@ -1,12 +1,10 @@
-const mongoose = require('mongoose')
 const router = require('express').Router()
 
 const arrayUtils = require('../utils/ArrayUtils')
 const bakery = require('../bakery')
 const CustomError = require('../utils/CustomError')
+const dbi = require('../dbi')
 
-
-const Processo = mongoose.model('Processo')
 
 router.get('/bake', async (req, res) => {
 
@@ -15,7 +13,7 @@ router.get('/bake', async (req, res) => {
 
   var [doc, processo] = await Promise.all([
     bakery.bake(req.query.template, req.query.processo),
-    Processo.findOne({ _id: req.query.processo })
+    dbi.Processo.findOne({ _id: req.query.processo })
   ])
 
   res.set({
