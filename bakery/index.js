@@ -1,27 +1,13 @@
-const angularExpressions = require('angular-expressions')
 const axios = require('axios')
 const Docxtemplater = require('docxtemplater')
 const Jszip = require('jszip')
-
 const cheerio = require('cheerio')
+
+const parser = require('./parser')
 
 
 const modules = {
   'MTP': require('./modules/mtp')
-}
-
-angularExpressions.filters = Object.assign(angularExpressions.filters, {
-  upper: (input) => (input) ? input.toUpperCase() : input,
-  lower: (input) => (input) ? input.toLowerCase() : input,
-  capitalize: (input) => (input) ? input.charAt(0).toUpperCase() + input.slice(1) : input,
-  concat: (input, path) => input.map(v => eval(`v.${path}`)).join(', '),
-  assign: (input) => ''
-})
-
-function angularParser(tag) {
-  if (tag === '.')
-    return { get: (s) => s }
-  return { get: (s) => angularExpressions.compile(tag.replace(/(’|“|”)/g, "'"))(s) }
 }
 
 async function getTemplateFullName (templateName) {
@@ -35,6 +21,7 @@ async function getTemplateFullName (templateName) {
     templateFullName = (matched) ? e.attribs.href : null
     return !matched
   })
+
   return templateFullName
 }
 
@@ -48,7 +35,7 @@ module.exports = {
     var templateParameters = await modules[templateName].getParameters(processo)
 
     var templater = new Docxtemplater()
-    templater.loadZip(new Jszip(template)).setData(templateParameters).setOptions({ paragraphLoop: true, parser: angularParser })
+    templater.loadZip(new Jszip(template)).setData(templateParameters).setOptions({ parser, paragraphLoop: true })
     templater.render()
 
     return templater.getZip().generate({ type: 'nodebuffer' })
