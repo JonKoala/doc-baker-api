@@ -12,16 +12,16 @@
   "dependencies": {
     "angular-expressions": "^1.0.0",
     "axios": "^0.19.0",
-    "body-parser": "^1.18.3",
-    "cheerio": "^1.0.0-rc.2",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
-    "docxtemplater": "^3.11.2",
-    "express": "^4.16.4",
+    "docxtemplater": "^3.14.1",
+    "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jszip": "^2.6.1",
-    "mongoose": "^5.4.12"
+    "mongoose": "^5.6.9"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.19.1"
   }
 }
